@@ -1,0 +1,177 @@
+"use client";
+
+import { useRef, useMemo, Suspense } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Float, Stars, MeshDistortMaterial, Environment } from "@react-three/drei";
+import * as THREE from "three";
+
+function MetallicCore() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const innerRef = useRef<THREE.Mesh>(null);
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    if (meshRef.current) {
+      meshRef.current.rotation.x = t * 0.15 + mouse.current.y * 0.3;
+      meshRef.current.rotation.y = t * 0.2 + mouse.current.x * 0.3;
+    }
+    if (innerRef.current) {
+      innerRef.current.rotation.x = -t * 0.25;
+      innerRef.current.rotation.z = t * 0.1;
+    }
+  });
+
+  return (
+    <group
+      onPointerMove={(e) => {
+        mouse.current.x = (e.point.x / 3) * 0.5;
+        mouse.current.y = (e.point.y / 3) * 0.5;
+      }}
+    >
+      <Float speed={1.5} rotationIntensity={0.3} floatIntensity={1}>
+        <mesh ref={meshRef} castShadow>
+          <icosahedronGeometry args={[1.8, 4]} />
+          <MeshDistortMaterial
+            color="#1a1a1a"
+            metalness={0.95}
+            roughness={0.15}
+            distort={0.25}
+            speed={1.5}
+            envMapIntensity={1.5}
+          />
+        </mesh>
+      </Float>
+
+      <mesh ref={innerRef}>
+        <octahedronGeometry args={[0.9, 0]} />
+        <meshStandardMaterial
+          color="#D4AF37"
+          metalness={1}
+          roughness={0.1}
+          emissive="#D4AF37"
+          emissiveIntensity={0.15}
+        />
+      </mesh>
+
+      <mesh>
+        <torusGeometry args={[2.5, 0.02, 16, 100]} />
+        <meshStandardMaterial color="#C0C0C0" metalness={1} roughness={0.2} />
+      </mesh>
+
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[3, 0.015, 16, 100]} />
+        <meshStandardMaterial
+          color="#00D9FF"
+          metalness={0.8}
+          roughness={0.3}
+          emissive="#00D9FF"
+          emissiveIntensity={0.3}
+          transparent
+          opacity={0.6}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+function Particles() {
+  const count = 500;
+  const ref = useRef<THREE.Points>(null);
+
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 20;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 20;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 20;
+    }
+    return pos;
+  }, []);
+
+  useFrame((state) => {
+    if (ref.current) {
+      ref.current.rotation.y = state.clock.elapsedTime * 0.02;
+    }
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+      </bufferGeometry>
+      <pointsMaterial size={0.02} color="#D4AF37" transparent opacity={0.6} sizeAttenuation />
+    </points>
+  );
+}
+
+function FloatingGeometry() {
+  const items = useMemo(
+    () =>
+      Array.from({ length: 8 }, () => ({
+        position: [
+          (Math.random() - 0.5) * 12,
+          (Math.random() - 0.5) * 8,
+          (Math.random() - 0.5) * 8 - 4,
+        ] as [number, number, number],
+        scale: 0.1 + Math.random() * 0.2,
+        speed: 0.5 + Math.random(),
+      })),
+    []
+  );
+
+  return (
+    <>
+      {items.map((item, i) => (
+        <Float key={i} speed={item.speed} floatIntensity={2}>
+          <mesh position={item.position} scale={item.scale}>
+            <boxGeometry />
+            <meshStandardMaterial
+              color="#C0C0C0"
+              metalness={0.9}
+              roughness={0.2}
+              transparent
+              opacity={0.3}
+              wireframe
+            />
+          </mesh>
+        </Float>
+      ))}
+    </>
+  );
+}
+
+function Scene() {
+  return (
+    <>
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[5, 5, 5]} intensity={0.8} color="#E5E4E2" />
+      <pointLight position={[-5, 3, -5]} intensity={0.5} color="#00D9FF" />
+      <pointLight position={[5, -3, 5]} intensity={0.3} color="#7A5FFF" />
+      <pointLight position={[0, 0, 3]} intensity={0.4} color="#D4AF37" />
+
+      <Stars radius={50} depth={50} count={2000} factor={3} saturation={0} fade speed={0.5} />
+      <Particles />
+      <FloatingGeometry />
+      <MetallicCore />
+      <Environment preset="city" />
+    </>
+  );
+}
+
+export function HeroScene() {
+  return (
+    <div className="absolute inset-0 z-0">
+      <Canvas
+        camera={{ position: [0, 0, 7], fov: 45 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        style={{ background: "transparent" }}
+      >
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
+      </Canvas>
+    </div>
+  );
+}
