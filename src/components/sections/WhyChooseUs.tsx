@@ -42,8 +42,6 @@ export function WhyChooseUs() {
 
   return (
     <section className="section-padding relative">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(212,175,55,0.04),transparent_50%)]" />
-
       <div ref={ref} className="relative z-10 mx-auto max-w-7xl">
         <SectionLabel label={t.whyUs.label} title={t.whyUs.title} subtitle={t.whyUs.subtitle} />
 

@@ -24,8 +24,6 @@ export function Contact() {
 
   return (
     <section id="contact" className="section-padding relative">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(212,175,55,0.04),transparent_50%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionLabel label={t.contact.label} title={t.contact.title} subtitle={t.contact.subtitle} />
 

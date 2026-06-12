@@ -28,8 +28,6 @@ export function Services() {
 
   return (
     <section id="services" className="section-padding relative">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,217,255,0.03),transparent_50%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionLabel label={t.services.label} title={t.services.title} subtitle={t.services.subtitle} />
 

@@ -16,8 +16,6 @@ export function About() {
 
   return (
     <section id="about" ref={containerRef} className="section-padding relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(122,95,255,0.05),transparent_50%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionLabel label={t.about.label} title={t.about.title} subtitle={t.about.subtitle} />
 

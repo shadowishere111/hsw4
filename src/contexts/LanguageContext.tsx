@@ -48,7 +48,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-deep" />
+      <div className="min-h-screen bg-transparent" />
     );
   }
 

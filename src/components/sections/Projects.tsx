@@ -17,8 +17,6 @@ export function Projects() {
 
   return (
     <section id="projects" className="section-padding relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.03),transparent_60%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionLabel label={t.projects.label} title={t.projects.title} subtitle={t.projects.subtitle} />
 
@@ -53,7 +51,7 @@ export function Projects() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-obsidian via-deep to-obsidian" />
+                <div className="absolute inset-0 bg-white/[0.03]" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
                   <div className="mb-4 h-20 w-20 rounded-xl border border-gold/20 bg-gold/5 backdrop-blur-sm">
                     <div className="flex h-full items-center justify-center font-display text-2xl font-bold text-gold">

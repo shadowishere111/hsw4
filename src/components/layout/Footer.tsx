@@ -17,8 +17,6 @@ export function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-white/5">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(212,175,55,0.03),transparent_50%)]" />
-
       <div className="section-padding relative z-10 mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <motion.h2

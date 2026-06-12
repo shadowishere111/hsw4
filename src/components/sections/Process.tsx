@@ -44,7 +44,7 @@ export function Process() {
                   </div>
                 </div>
 
-                <div className="absolute left-8 hidden h-4 w-4 -translate-x-1/2 rounded-full border-2 border-gold bg-deep md:left-1/2 md:block">
+                <div className="absolute left-8 hidden h-4 w-4 -translate-x-1/2 rounded-full border-2 border-gold bg-white/10 backdrop-blur-sm md:left-1/2 md:block">
                   <div className="absolute inset-0 animate-pulse-glow rounded-full bg-gold/30" />
                 </div>
 
