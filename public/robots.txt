@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shadowishere111.github.io/hsw4/sitemap.xml
