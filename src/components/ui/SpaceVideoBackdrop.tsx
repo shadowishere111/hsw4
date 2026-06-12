@@ -25,7 +25,7 @@ export function SpaceVideoBackdrop() {
         className="h-full w-full scale-105 object-cover"
         src={`${base}/space-bg.mp4`}
       />
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute inset-0 bg-black/15" />
     </div>
   );
 }
