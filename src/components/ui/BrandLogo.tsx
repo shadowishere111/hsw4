@@ -18,7 +18,7 @@ export function BrandLogo({ size = 40, className, showFrame = true }: BrandLogoP
       alt="House of Software"
       width={size}
       height={size}
-      className="h-full w-full object-contain"
+      className="h-full w-full object-contain brightness-[2.25] contrast-[1.1]"
       priority
     />
   );
@@ -34,7 +34,7 @@ export function BrandLogo({ size = 40, className, showFrame = true }: BrandLogoP
   return (
     <div
       className={cn(
-        "relative shrink-0 overflow-hidden rounded-lg border border-gold/25 bg-black/60 p-1 shadow-[0_0_20px_rgba(212,175,55,0.08)] transition-all group-hover:border-gold/40 group-hover:shadow-[0_0_24px_rgba(212,175,55,0.15)]",
+        "relative shrink-0 overflow-hidden rounded-lg border border-white/10 bg-black p-0.5 transition-all group-hover:border-white/20",
         className
       )}
       style={{ width: size, height: size }}
