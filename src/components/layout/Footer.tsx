@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -33,9 +34,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-3">
           <div>
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-gold/30 bg-gold/10 font-display text-sm font-bold text-gold">
-                HS
-              </div>
+              <BrandLogo size={40} />
               <div>
                 <span className="block font-semibold text-platinum">{t.footer.brand}</span>
                 <span className="text-xs text-silver">{t.footer.arabic}</span>

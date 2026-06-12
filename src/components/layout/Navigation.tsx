@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -38,12 +39,7 @@ export function Navigation() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
         <a href="#" className="group flex items-center gap-3" data-cursor-hover>
-          <div className="relative h-10 w-10">
-            <div className="absolute inset-0 rounded-lg border border-gold/30 bg-gold/10" />
-            <div className="absolute inset-1 flex items-center justify-center font-display text-sm font-bold text-gold">
-              HS
-            </div>
-          </div>
+          <BrandLogo size={40} />
           <div className="hidden sm:block">
             <span className="block text-sm font-semibold text-platinum">House of Software</span>
             <span className="block text-[10px] text-silver/60">{t.footer.arabic}</span>
