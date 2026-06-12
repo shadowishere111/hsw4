@@ -56,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${notoSansArabic.variable} font-body antialiased bg-deep text-platinum`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${notoSansArabic.variable} font-body antialiased bg-transparent text-platinum`}
       >
         <StructuredData />
         <ClientProviders>{children}</ClientProviders>

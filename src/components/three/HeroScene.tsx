@@ -4,31 +4,49 @@ import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Stars, MeshDistortMaterial, Environment } from "@react-three/drei";
 import * as THREE from "three";
+import { usePointerSmooth } from "@/hooks/usePointerSmooth";
 
 function MetallicCore() {
+  const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const innerRef = useRef<THREE.Mesh>(null);
-  const mouse = useRef({ x: 0, y: 0 });
+  const silverOrbitRef = useRef<THREE.Mesh>(null);
+  const goldOrbitRef = useRef<THREE.Mesh>(null);
+  const pointer = usePointerSmooth(0.06);
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
-    if (meshRef.current) {
-      meshRef.current.rotation.x = t * 0.15 + mouse.current.y * 0.3;
-      meshRef.current.rotation.y = t * 0.2 + mouse.current.x * 0.3;
+    const px = pointer.current.x;
+    const py = pointer.current.y;
+
+    if (groupRef.current) {
+      groupRef.current.position.x = px * 0.9;
+      groupRef.current.position.y = py * 0.65;
     }
+
+    if (meshRef.current) {
+      meshRef.current.rotation.x = t * 0.12 + py * 0.35;
+      meshRef.current.rotation.y = t * 0.18 + px * 0.35;
+    }
+
     if (innerRef.current) {
-      innerRef.current.rotation.x = -t * 0.25;
-      innerRef.current.rotation.z = t * 0.1;
+      innerRef.current.rotation.x = -t * 0.22 + py * 0.2;
+      innerRef.current.rotation.z = t * 0.12 + px * 0.15;
+    }
+
+    if (silverOrbitRef.current) {
+      silverOrbitRef.current.rotation.x = t * 0.1 + py * 0.4;
+      silverOrbitRef.current.rotation.z = t * 0.07 + px * 0.3;
+    }
+
+    if (goldOrbitRef.current) {
+      goldOrbitRef.current.rotation.x = Math.PI / 2 + t * 0.08 + py * 0.35;
+      goldOrbitRef.current.rotation.y = t * 0.11 + px * 0.35;
     }
   });
 
   return (
-    <group
-      onPointerMove={(e) => {
-        mouse.current.x = (e.point.x / 3) * 0.5;
-        mouse.current.y = (e.point.y / 3) * 0.5;
-      }}
-    >
+    <group ref={groupRef}>
       <Float speed={1.5} rotationIntensity={0.3} floatIntensity={1}>
         <mesh ref={meshRef} castShadow>
           <icosahedronGeometry args={[1.8, 4]} />
@@ -54,21 +72,21 @@ function MetallicCore() {
         />
       </mesh>
 
-      <mesh>
+      <mesh ref={silverOrbitRef}>
         <torusGeometry args={[2.5, 0.02, 16, 100]} />
         <meshStandardMaterial color="#C0C0C0" metalness={1} roughness={0.2} />
       </mesh>
 
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
+      <mesh ref={goldOrbitRef}>
         <torusGeometry args={[3, 0.015, 16, 100]} />
         <meshStandardMaterial
-          color="#00D9FF"
-          metalness={0.8}
-          roughness={0.3}
-          emissive="#00D9FF"
-          emissiveIntensity={0.3}
+          color="#D4AF37"
+          metalness={0.9}
+          roughness={0.25}
+          emissive="#D4AF37"
+          emissiveIntensity={0.35}
           transparent
-          opacity={0.6}
+          opacity={0.75}
         />
       </mesh>
     </group>

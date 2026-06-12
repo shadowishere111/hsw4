@@ -1,3 +1,4 @@
+import { SpaceVideoBackdrop } from "@/components/ui/SpaceVideoBackdrop";
 import { Navigation } from "@/components/layout/Navigation";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
@@ -14,6 +15,7 @@ import { Footer } from "@/components/layout/Footer";
 export default function Home() {
   return (
     <main className="relative overflow-hidden">
+      <SpaceVideoBackdrop />
       <Navigation />
       <Hero />
       <About />
