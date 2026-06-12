@@ -1,25 +1,36 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LogoMark } from "@/components/ui/Logo";
+import { path } from "@/lib/utils";
 
 export function Footer() {
   const { t } = useLanguage();
   const year = new Date().getFullYear();
 
   const links = [
-    { label: t.footer.links.about, href: "#about" },
-    { label: t.footer.links.services, href: "#services" },
-    { label: t.footer.links.projects, href: "#projects" },
-    { label: t.footer.links.contact, href: "#contact" },
+    { label: t.footer.links.about, href: "/#about" },
+    { label: t.footer.links.services, href: "/#services" },
+    { label: t.footer.links.projects, href: "/projects" },
+    { label: t.footer.links.contact, href: "/contact" },
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/5">
+    <footer className="relative overflow-hidden border-t border-white/5 bg-deep/80 backdrop-blur-xl">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(212,175,55,0.03),transparent_50%)]" />
 
       <div className="section-padding relative z-10 mx-auto max-w-7xl">
         <div className="mb-16 text-center">
+          <motion.div
+            className="mx-auto mb-6 flex justify-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <LogoMark size={48} />
+          </motion.div>
           <motion.h2
             className="heading-lg text-gradient-gold"
             initial={{ opacity: 0, y: 20 }}
@@ -33,29 +44,25 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-3">
           <div>
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-gold/30 bg-gold/10 font-display text-sm font-bold text-gold">
-                HS
-              </div>
+              <LogoMark size={36} />
               <div>
                 <span className="block font-semibold text-platinum">{t.footer.brand}</span>
                 <span className="text-xs text-silver">{t.footer.arabic}</span>
               </div>
             </div>
-            <p className="text-sm text-silver">
-              houseofsw.com
-            </p>
+            <p className="text-sm text-silver">houseofsw.com</p>
           </div>
 
           <div className="flex flex-col gap-3">
             {links.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                href={link.href.startsWith("/#") ? path("/") + link.href.slice(1) : path(link.href)}
                 className="text-sm text-silver transition-colors hover:text-soft-gold"
                 data-cursor-hover
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
 

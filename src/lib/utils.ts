@@ -7,5 +7,11 @@ export function lerp(start: number, end: number, factor: number) {
 }
 
 export function getBasePath() {
-  return process.env.NODE_ENV === "production" ? "/hsw4" : "";
+  return process.env.NEXT_PUBLIC_BASE_PATH ?? (process.env.NODE_ENV === "production" ? "/hsw4" : "");
+}
+
+export function path(route: string) {
+  const base = getBasePath();
+  const normalized = route.startsWith("/") ? route : `/${route}`;
+  return `${base}${normalized}${normalized.endsWith("/") ? "" : "/"}`;
 }

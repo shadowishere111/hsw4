@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { LogoAnimated } from "@/components/ui/Logo";
+import { path } from "@/lib/utils";
 
 const HeroScene = dynamic(() => import("@/components/three/HeroScene").then((m) => m.HeroScene), {
   ssr: false,
@@ -21,6 +23,15 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#050505_70%)]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 text-center md:px-12">
+        <motion.div
+          className="mx-auto mb-8 flex justify-center"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.1 }}
+        >
+          <LogoAnimated size={72} glow />
+        </motion.div>
+
         <motion.p
           className="mb-6 text-xs font-medium uppercase tracking-[0.4em] text-gold/80"
           initial={{ opacity: 0, y: 30 }}
@@ -55,10 +66,10 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <MagneticButton href="#contact" variant="primary">
+          <MagneticButton href={path("/contact")} variant="primary">
             {t.hero.cta1}
           </MagneticButton>
-          <MagneticButton href="#projects" variant="secondary">
+          <MagneticButton href={path("/projects")} variant="secondary">
             {t.hero.cta2}
           </MagneticButton>
         </motion.div>

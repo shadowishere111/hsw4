@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export function Technology() {
   const { t } = useLanguage();
@@ -17,10 +18,10 @@ export function Technology() {
 
   return (
     <section id="technology" ref={containerRef} className="section-padding relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(122,95,255,0.05),transparent_50%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
-        <SectionLabel label={t.technology.label} title={t.technology.title} subtitle={t.technology.subtitle} />
+        <ScrollReveal animation="blur">
+          <SectionLabel label={t.technology.label} title={t.technology.title} subtitle={t.technology.subtitle} />
+        </ScrollReveal>
 
         <div className="relative">
           <motion.div
@@ -32,16 +33,13 @@ export function Technology() {
             style={{ rotate: rotateReverse }}
           />
 
+          <ScrollReveal animation="stagger" staggerChildren={0.05}>
           <div className="relative grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
-            {t.technology.items.map((tech, i) => (
-              <motion.div
+            {t.technology.items.map((tech) => (
+              <div
                 key={tech.name}
-                className="glass group relative flex flex-col items-center rounded-xl p-5 text-center transition-all hover:border-gold/30 hover:shadow-glow"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                data-reveal-child
+                className="glass group relative flex flex-col items-center rounded-xl p-5 text-center transition-all hover:-translate-y-2 hover:border-gold/30 hover:shadow-glow"
                 data-cursor-hover
               >
                 <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 font-mono text-xs font-bold text-gold transition-colors group-hover:border-gold/30 group-hover:bg-gold/10">
@@ -51,9 +49,10 @@ export function Technology() {
                 <p className="mt-1 text-[10px] leading-tight text-silver opacity-0 transition-opacity group-hover:opacity-100">
                   {tech.desc}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

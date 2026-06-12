@@ -1,0 +1,12 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- W outer frame -->
+  <path d="M10 85 L25 25 L40 55 L50 30 L60 55 L75 25 L90 85" stroke="#E5E4E2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- H structure -->
+  <path d="M35 35 L35 70 M65 35 L65 70 M35 52 L65 52" stroke="#C0C0C0" stroke-width="1" stroke-linecap="round"/>
+  <!-- S center curve -->
+  <path d="M38 48 C38 42 62 42 62 48 C62 54 38 54 38 60 C38 66 62 66 62 60" stroke="#D4AF37" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- Top accent -->
+  <path d="M50 15 L50 22" stroke="#00D9FF" stroke-width="0.8" stroke-linecap="round" opacity="0.6"/>
+  <!-- Corner details -->
+  <path d="M10 85 L10 80 M90 85 L90 80" stroke="#C0C0C0" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+</svg>

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ScrollReveal, ParallaxLayer } from "@/components/ui/ScrollReveal";
 
 export function About() {
   const { t } = useLanguage();
@@ -16,29 +17,25 @@ export function About() {
 
   return (
     <section id="about" ref={containerRef} className="section-padding relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(122,95,255,0.05),transparent_50%)]" />
+      <ParallaxLayer className="pointer-events-none absolute right-0 top-20 h-64 w-64 rounded-full bg-cosmic/10 blur-[120px]" speed={0.5} />
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <SectionLabel label={t.about.label} title={t.about.title} subtitle={t.about.subtitle} />
+        <ScrollReveal animation="fadeUp">
+          <SectionLabel label={t.about.label} title={t.about.title} subtitle={t.about.subtitle} />
+        </ScrollReveal>
 
         <div className="grid items-center gap-16 lg:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
+          <ScrollReveal animation="fadeLeft">
+          <motion.div>
             <p className="body-lg mb-8">{t.about.story}</p>
             <p className="body-lg mb-8">{t.about.promise}</p>
             <p className="body-lg">{t.about.global}</p>
           </motion.div>
+          </ScrollReveal>
 
+          <ScrollReveal animation="fadeRight">
           <motion.div
             className="glass-strong relative rounded-2xl p-8 md:p-10"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
             style={{ y }}
           >
             <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-gold/10 blur-2xl" />
@@ -57,29 +54,27 @@ export function About() {
               <p className="text-sm leading-relaxed text-silver">{t.about.founderBio}</p>
             </div>
           </motion.div>
+          </ScrollReveal>
         </div>
 
-        <div className="relative mt-24">
+        <ScrollReveal animation="stagger" staggerChildren={0.12} className="relative mt-24">
           <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-gold/40 via-gold/20 to-transparent lg:block" />
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
-            {t.about.milestones.map((milestone, i) => (
-              <motion.div
+            {t.about.milestones.map((milestone) => (
+              <div
                 key={milestone.year}
+                data-reveal-child
                 className="glass group relative rounded-xl p-6 transition-all hover:border-gold/30 hover:shadow-glow"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
                 data-cursor-hover
               >
                 <span className="text-2xl font-bold text-gradient-gold">{milestone.year}</span>
                 <h4 className="mt-2 font-semibold text-platinum">{milestone.title}</h4>
                 <p className="mt-2 text-sm text-silver">{milestone.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

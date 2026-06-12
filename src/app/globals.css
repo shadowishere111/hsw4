@@ -140,6 +140,16 @@ body {
   border-radius: 3px;
 }
 
+/* Logo glow pulse */
+@keyframes logo-pulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.3)); }
+  50% { filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6)); }
+}
+
+.logo-glow {
+  animation: logo-pulse 3s ease-in-out infinite;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,

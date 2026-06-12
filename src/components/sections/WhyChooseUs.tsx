@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 function AnimatedMetric({ value, inView }: { value: string; inView: boolean }) {
   const [display, setDisplay] = useState("0");
@@ -42,29 +43,28 @@ export function WhyChooseUs() {
 
   return (
     <section className="section-padding relative">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(212,175,55,0.04),transparent_50%)]" />
-
       <div ref={ref} className="relative z-10 mx-auto max-w-7xl">
-        <SectionLabel label={t.whyUs.label} title={t.whyUs.title} subtitle={t.whyUs.subtitle} />
+        <ScrollReveal animation="fadeUp">
+          <SectionLabel label={t.whyUs.label} title={t.whyUs.title} subtitle={t.whyUs.subtitle} />
+        </ScrollReveal>
 
+        <ScrollReveal animation="stagger" staggerChildren={0.08}>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {t.whyUs.items.map((item, i) => (
-            <motion.div
+          {t.whyUs.items.map((item) => (
+            <div
               key={item.title}
+              data-reveal-child
               className="glass-strong group relative overflow-hidden rounded-2xl p-8"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
               data-cursor-hover
             >
               <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gold/5 blur-2xl transition-all group-hover:bg-gold/10" />
               <AnimatedMetric value={item.metric} inView={inView} />
               <h3 className="mt-4 text-lg font-semibold text-platinum">{item.title}</h3>
               <p className="mt-2 text-sm text-silver">{item.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

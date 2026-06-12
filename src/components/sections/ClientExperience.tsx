@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export function ClientExperience() {
   const { t } = useLanguage();
@@ -11,39 +12,35 @@ export function ClientExperience() {
 
   return (
     <section className="section-padding relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(0,217,255,0.03),transparent_50%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
-        <SectionLabel label={t.clients.label} title={t.clients.title} subtitle={t.clients.subtitle} />
+        <ScrollReveal animation="fadeUp">
+          <SectionLabel label={t.clients.label} title={t.clients.title} subtitle={t.clients.subtitle} />
+        </ScrollReveal>
 
-        <div className="mb-16 grid grid-cols-2 gap-6 md:grid-cols-4">
-          {t.clients.stats.map((stat, i) => (
-            <motion.div
+        <ScrollReveal animation="stagger" staggerChildren={0.1} className="mb-16 grid grid-cols-2 gap-6 md:grid-cols-4">
+          {t.clients.stats.map((stat) => (
+            <div
               key={stat.label}
+              data-reveal-child
               className="glass text-center rounded-xl p-6"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <span className="text-3xl font-bold text-gradient-gold md:text-4xl">{stat.value}</span>
               <p className="mt-2 text-sm text-silver">{stat.label}</p>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </ScrollReveal>
 
+        <ScrollReveal animation="stagger" staggerChildren={0.12}>
         <div className="grid gap-8 lg:grid-cols-3">
           {t.clients.testimonials.map((testimonial, i) => (
-            <motion.button
+            <button
               key={i}
+              data-reveal-child
+              type="button"
               onClick={() => setActive(i)}
               className={`glass-strong relative rounded-2xl p-8 text-left transition-all ${
                 active === i ? "border-gold/30 shadow-glow" : "hover:border-white/20"
               }`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
               data-cursor-hover
             >
               <div className="mb-4 text-4xl text-gold/30">&ldquo;</div>
@@ -66,9 +63,10 @@ export function ClientExperience() {
                 <p className="text-sm font-medium text-platinum">{testimonial.author}</p>
                 <p className="text-xs text-gold">{testimonial.role}</p>
               </div>
-            </motion.button>
+            </button>
           ))}
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

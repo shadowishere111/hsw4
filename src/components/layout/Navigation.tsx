@@ -1,30 +1,41 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { cn } from "@/lib/utils";
+import { LogoMark } from "@/components/ui/Logo";
+import { cn, path, getBasePath } from "@/lib/utils";
 
 const navItems = [
-  { key: "about", href: "#about" },
-  { key: "services", href: "#services" },
-  { key: "projects", href: "#projects" },
-  { key: "technology", href: "#technology" },
-  { key: "process", href: "#process" },
-  { key: "contact", href: "#contact" },
-] as const;
+  { key: "about" as const, href: "/#about" },
+  { key: "services" as const, href: "/#services" },
+  { key: "projects" as const, href: "/projects" },
+  { key: "technology" as const, href: "/#technology" },
+  { key: "process" as const, href: "/#process" },
+  { key: "contact" as const, href: "/contact" },
+];
 
 export function Navigation() {
   const { t, locale, toggleLocale, dir } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const base = getBasePath();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const resolveHref = (href: string) => {
+    if (href.startsWith("/#")) return `${base}/${href.slice(1)}`;
+    if (href.startsWith("/")) return path(href);
+    return href;
+  };
 
   return (
     <motion.header
@@ -37,30 +48,35 @@ export function Navigation() {
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
-        <a href="#" className="group flex items-center gap-3" data-cursor-hover>
-          <div className="relative h-10 w-10">
-            <div className="absolute inset-0 rounded-lg border border-gold/30 bg-gold/10" />
-            <div className="absolute inset-1 flex items-center justify-center font-display text-sm font-bold text-gold">
-              HS
-            </div>
-          </div>
+        <Link href={path("/")} className="group flex items-center gap-3" data-cursor-hover>
+          <LogoMark size={40} />
           <div className="hidden sm:block">
             <span className="block text-sm font-semibold text-platinum">House of Software</span>
             <span className="block text-[10px] text-silver/60">{t.footer.arabic}</span>
           </div>
-        </a>
+        </Link>
 
         <div className="hidden items-center gap-8 lg:flex">
-          {navItems.map((item) => (
-            <a
-              key={item.key}
-              href={item.href}
-              className="text-sm text-silver transition-colors hover:text-soft-gold"
-              data-cursor-hover
-            >
-              {t.nav[item.key]}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const href = resolveHref(item.href);
+            const isActive =
+              (item.href === "/projects" && pathname?.includes("/projects")) ||
+              (item.href === "/contact" && pathname?.includes("/contact"));
+
+            return (
+              <Link
+                key={item.key}
+                href={href}
+                className={cn(
+                  "text-sm transition-colors",
+                  isActive ? "text-soft-gold" : "text-silver hover:text-soft-gold"
+                )}
+                data-cursor-hover
+              >
+                {t.nav[item.key]}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="flex items-center gap-4">
@@ -73,7 +89,7 @@ export function Navigation() {
           </button>
 
           <div className="hidden md:block">
-            <MagneticButton href="#contact" variant="primary" className="!px-6 !py-2.5 !text-sm">
+            <MagneticButton href={path("/contact")} variant="primary" className="!px-6 !py-2.5 !text-sm">
               {t.nav.cta}
             </MagneticButton>
           </div>
@@ -100,19 +116,22 @@ export function Navigation() {
             dir={dir}
           >
             {navItems.map((item, i) => (
-              <motion.a
+              <motion.div
                 key={item.key}
-                href={item.href}
-                className="text-xl text-platinum"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                onClick={() => setMobileOpen(false)}
               >
-                {t.nav[item.key]}
-              </motion.a>
+                <Link
+                  href={resolveHref(item.href)}
+                  className="text-xl text-platinum"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t.nav[item.key]}
+                </Link>
+              </motion.div>
             ))}
-            <MagneticButton href="#contact" variant="primary">
+            <MagneticButton href={path("/contact")} variant="primary">
               {t.nav.cta}
             </MagneticButton>
           </motion.div>
