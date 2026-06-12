@@ -1,0 +1,8 @@
+[build]
+  command = "NEXT_PUBLIC_BASE_PATH= npm run build"
+  publish = "out"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"

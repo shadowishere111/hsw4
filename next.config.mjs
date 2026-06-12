@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const isProd = process.env.NODE_ENV === 'production';
-const basePath = isProd ? '/hsw4' : '';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? (isProd ? '/hsw4' : '');
 
 const nextConfig = {
   output: 'export',

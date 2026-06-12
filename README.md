@@ -4,7 +4,10 @@ Premium futuristic website for [House of Software](https://houseofsw.com) (بي�
 
 ## Live Demo
 
-After deployment: **https://shadowishere111.github.io/hsw4/**
+**GitHub Pages:** https://shadowishere111.github.io/hsw4/
+
+> The site is built and deployed to the `gh-pages` branch automatically on every push to `main`.  
+> To activate the live URL, open [Repository Settings → Pages](https://github.com/shadowishere111/hsw4/settings/pages), set **Source** to **Deploy from a branch**, choose branch **`gh-pages`** / **`/ (root)`**, and save.
 
 ## Tech Stack
 
