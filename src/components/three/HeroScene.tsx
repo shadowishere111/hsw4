@@ -2,78 +2,9 @@
 
 import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Stars, MeshDistortMaterial, Environment } from "@react-three/drei";
+import { Stars, Environment } from "@react-three/drei";
 import * as THREE from "three";
-
-function MetallicCore() {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const innerRef = useRef<THREE.Mesh>(null);
-  const mouse = useRef({ x: 0, y: 0 });
-
-  useFrame((state) => {
-    const t = state.clock.elapsedTime;
-    if (meshRef.current) {
-      meshRef.current.rotation.x = t * 0.15 + mouse.current.y * 0.3;
-      meshRef.current.rotation.y = t * 0.2 + mouse.current.x * 0.3;
-    }
-    if (innerRef.current) {
-      innerRef.current.rotation.x = -t * 0.25;
-      innerRef.current.rotation.z = t * 0.1;
-    }
-  });
-
-  return (
-    <group
-      onPointerMove={(e) => {
-        mouse.current.x = (e.point.x / 3) * 0.5;
-        mouse.current.y = (e.point.y / 3) * 0.5;
-      }}
-    >
-      <Float speed={1.5} rotationIntensity={0.3} floatIntensity={1}>
-        <mesh ref={meshRef} castShadow>
-          <icosahedronGeometry args={[1.8, 4]} />
-          <MeshDistortMaterial
-            color="#1a1a1a"
-            metalness={0.95}
-            roughness={0.15}
-            distort={0.25}
-            speed={1.5}
-            envMapIntensity={1.5}
-          />
-        </mesh>
-      </Float>
-
-      <mesh ref={innerRef}>
-        <octahedronGeometry args={[0.9, 0]} />
-        <meshStandardMaterial
-          color="#D4AF37"
-          metalness={1}
-          roughness={0.1}
-          emissive="#D4AF37"
-          emissiveIntensity={0.15}
-        />
-      </mesh>
-
-      <mesh>
-        <torusGeometry args={[2.5, 0.02, 16, 100]} />
-        <meshStandardMaterial color="#C0C0C0" metalness={1} roughness={0.2} />
-      </mesh>
-
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[3, 0.015, 16, 100]} />
-        <meshStandardMaterial
-          color="#00D9FF"
-          metalness={0.8}
-          roughness={0.3}
-          emissive="#00D9FF"
-          emissiveIntensity={0.3}
-          transparent
-          opacity={0.6}
-        />
-      </mesh>
-    </group>
-  );
-}
+import { InteractivePlanet } from "./InteractivePlanet";
 
 function Particles() {
   const count = 500;
@@ -105,42 +36,6 @@ function Particles() {
   );
 }
 
-function FloatingGeometry() {
-  const items = useMemo(
-    () =>
-      Array.from({ length: 8 }, () => ({
-        position: [
-          (Math.random() - 0.5) * 12,
-          (Math.random() - 0.5) * 8,
-          (Math.random() - 0.5) * 8 - 4,
-        ] as [number, number, number],
-        scale: 0.1 + Math.random() * 0.2,
-        speed: 0.5 + Math.random(),
-      })),
-    []
-  );
-
-  return (
-    <>
-      {items.map((item, i) => (
-        <Float key={i} speed={item.speed} floatIntensity={2}>
-          <mesh position={item.position} scale={item.scale}>
-            <boxGeometry />
-            <meshStandardMaterial
-              color="#C0C0C0"
-              metalness={0.9}
-              roughness={0.2}
-              transparent
-              opacity={0.3}
-              wireframe
-            />
-          </mesh>
-        </Float>
-      ))}
-    </>
-  );
-}
-
 function Scene() {
   return (
     <>
@@ -152,8 +47,7 @@ function Scene() {
 
       <Stars radius={50} depth={50} count={2000} factor={3} saturation={0} fade speed={0.5} />
       <Particles />
-      <FloatingGeometry />
-      <MetallicCore />
+      <InteractivePlanet moveIntensity={1.2} orbitIntensity={1} />
       <Environment preset="city" />
     </>
   );

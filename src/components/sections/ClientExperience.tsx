@@ -11,8 +11,6 @@ export function ClientExperience() {
 
   return (
     <section className="section-padding relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(0,217,255,0.03),transparent_50%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionLabel label={t.clients.label} title={t.clients.title} subtitle={t.clients.subtitle} />
 

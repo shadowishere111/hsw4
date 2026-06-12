@@ -43,7 +43,7 @@ html.lenis body {
 }
 
 body {
-  background: var(--deep);
+  background: transparent;
   color: var(--platinum);
   overflow-x: hidden;
   cursor: none;

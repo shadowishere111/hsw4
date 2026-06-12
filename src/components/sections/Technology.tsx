@@ -17,8 +17,6 @@ export function Technology() {
 
   return (
     <section id="technology" ref={containerRef} className="section-padding relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(122,95,255,0.05),transparent_50%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionLabel label={t.technology.label} title={t.technology.title} subtitle={t.technology.subtitle} />
 

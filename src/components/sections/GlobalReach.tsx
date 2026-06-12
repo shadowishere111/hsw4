@@ -8,8 +8,8 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 const GlobeScene = dynamic(() => import("@/components/three/GlobeScene").then((m) => m.GlobeScene), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[400px] items-center justify-center md:h-[500px]">
-      <div className="h-16 w-16 animate-spin rounded-full border-2 border-gold/20 border-t-gold" />
+    <div className="mx-auto flex h-[min(72vw,300px)] w-full max-w-[420px] items-center justify-center sm:h-[360px] md:h-[400px] lg:h-[min(52vh,500px)]">
+      <div className="h-12 w-12 animate-spin rounded-full border-2 border-gold/20 border-t-gold" />
     </div>
   ),
 });
@@ -19,29 +19,28 @@ export function GlobalReach() {
 
   return (
     <section className="section-padding relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(122,95,255,0.04),transparent_60%)]" />
-
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionLabel label={t.global.label} title={t.global.title} subtitle={t.global.subtitle} />
 
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <GlobeScene />
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+          <div className="flex justify-center">
+            <GlobeScene />
+          </div>
 
-          <div className="space-y-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:gap-4">
             {t.global.regions.map((region, i) => (
               <motion.div
                 key={region}
-                className="glass flex items-center gap-4 rounded-xl p-5"
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                className="glass flex items-center gap-3 rounded-xl p-4 sm:p-5"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
               >
-                <div className="flex h-3 w-3 items-center justify-center">
-                  <div className="h-2 w-2 rounded-full bg-electric shadow-[0_0_10px_rgba(0,217,255,0.5)]" />
+                <div className="flex h-3 w-3 shrink-0 items-center justify-center">
+                  <div className="h-2 w-2 rounded-full bg-soft-gold shadow-[0_0_10px_rgba(255,216,107,0.5)]" />
                 </div>
-                <span className="text-lg font-medium text-platinum">{region}</span>
-                <div className="ml-auto h-px flex-1 max-w-[100px] bg-gradient-to-r from-gold/40 to-transparent" />
+                <span className="text-base font-medium text-platinum sm:text-lg">{region}</span>
               </motion.div>
             ))}
           </div>

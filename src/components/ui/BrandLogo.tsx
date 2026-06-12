@@ -34,10 +34,10 @@ export function BrandLogo({ size = 40, className, showFrame = true }: BrandLogoP
   return (
     <div
       className={cn(
-        "relative shrink-0 overflow-hidden rounded-lg border border-white/10 bg-black p-0.5 transition-all group-hover:border-white/20",
+        "relative shrink-0 overflow-hidden rounded-lg border border-gold/30 p-0.5 transition-all group-hover:border-gold/50",
         className
       )}
-      style={{ width: size, height: size }}
+      style={{ width: size, height: size, backgroundColor: "rgb(138, 94, 0)" }}
     >
       {image}
     </div>
